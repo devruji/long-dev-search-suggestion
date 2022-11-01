@@ -24,21 +24,21 @@
   <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>
-    var name; // global variable that keeps the name
+    var suggestions; // global variable that keeps the suggestions
     new Autocomplete("#autocomplete", {
       search: (input) => {
-        const url = `/search/?name=${input}`;
+        const url = `/search/?searchTerm=${input}`;
         return new Promise((resolve) => {
           fetch(url)
             .then((response) => response.json())
             .then((data) => {
-              resolve(data.name);
+              resolve(data.suggestions);
             });
         });
       },
 
       onSubmit: (result) => {
-        name = result; //pass clicked result to global
+        suggestions = result; //pass clicked result to global
       },
     });
     $("#ull").click(function (e) {

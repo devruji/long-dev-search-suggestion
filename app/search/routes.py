@@ -9,19 +9,27 @@ from app.models.user import Users
 @search_bp.route("/", methods=["GET"])
 def search():
     try:
-        name = request.args.get("name")
+        terms = request.args.get("searchTerm")
 
-        if name:
-            users = (
-                Users.query.filter(Users.name.ilike(f"{name}%"))
-                .order_by(desc(Users.name))
+        if terms:
+            keywords = (
+                Users.query.filter(Users.keyword.ilike(f"{terms}%"))
+                .order_by(desc(Users.score))
                 .limit(5)
                 .all()
             )
-            # user = Users.query.filter_by(name="David Curtis").first()
-            print(f"INFO: Query -> [{name}]", f"INFO: Found -> {users}", sep="\n")
+
+            # ?: Log search results
+            print(f"INFO: Query -> [{terms}]")
+            for idx, _ in enumerate(keywords):
+                print(
+                    f"INFO: Result [{idx+1}] -> keyword: {_.keyword} | score: {_.score}"
+                )
             print("-" * 100)
-            return jsonify({"name": [u.name for u in users]})
+
+            return jsonify({"suggestions": [k.keyword for k in keywords]})
+
         return render_template("search.html")
+
     except TemplateNotFound:
         abort(404)
