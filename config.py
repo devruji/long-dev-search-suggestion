@@ -10,7 +10,7 @@ class Config:
     SECRET_KEY = os.urandom(24)
     CSRF_ENABLED = False
     WTF_CSRF_CHECK_DEFAULT = False
-    SQLALCHEMY_DATABASE_URI = "postgresql://bossruji:password@localhost/bossruji"
+    SQLALCHEMY_DATABASE_URI = "sqlite:///db.sqlite3"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
