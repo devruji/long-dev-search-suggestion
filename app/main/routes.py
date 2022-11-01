@@ -8,8 +8,8 @@ from app.models.user import Users
 def index():
     value = request.args.get("valname")
     if value:
-        url = Users.query.filter_by(name=value).first().website[1:-1]
-        return jsonify({"urlLink": url})
+        # url = Users.query.filter_by(name=value).first().website[1:-1]
+        return jsonify({"urlLink": "/"})
 
     return "Hello, World!", 200
 
