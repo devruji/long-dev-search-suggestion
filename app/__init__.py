@@ -3,7 +3,7 @@ import os
 from flask import Flask
 from flask_wtf.csrf import CSRFProtect
 
-from app.extensions import db
+from app.extensions import db, migrate
 
 
 # ?: Application Factory
@@ -39,8 +39,9 @@ def cls_config_selector():
 
 
 def install_extensions(app):
-    db.init_app(app)
     csrf.init_app(app)
+    db.init_app(app)
+    migrate.init_app(app, db)
 
 
 def register_blueprints(app):
